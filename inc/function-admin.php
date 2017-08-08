@@ -66,15 +66,11 @@ function sunset_setup_admin_general_settings()
         register_setting('sunset-settings-group', 'last_name');
         register_setting('sunset-settings-group', 'user_description');
         register_setting('sunset-settings-group', 'twitter_handle', function ($input) {
-            $output = sanitize_text_field($input);
-            $output = str_replace('@', '', $output);
-            return $output;
+            return str_replace('@', '', sanitize_text_field($input));
         });
         register_setting('sunset-settings-group', 'facebook_handle');
         register_setting('sunset-settings-group', 'gplus_handle', function ($input) {
-            $output = sanitize_text_field($input);
-            $output = str_replace('+', '', $output);
-            return $output;
+            return str_replace('+', '', sanitize_text_field($input));
         });
 
         // Sidebar Section
@@ -87,59 +83,29 @@ function sunset_setup_admin_general_settings()
             'alecaddd_sunset'
         );
 
-        // Sidebar Field - Name
-        add_settings_field(
-            'sidebar-name',
-            'Full Name',
-            function () {
-                require_once get_template_directory() . '/inc/templates/fields/name.php';
-            },
-            'alecaddd_sunset',
-            'sunset-sidebar-options'
-        );
-
-        // Sidebar Field - Description
-        add_settings_field(
-            'sidebar-description',
-            'Description',
-            function () {
-                require_once get_template_directory() . '/inc/templates/fields/description.php';
-            },
-            'alecaddd_sunset',
-            'sunset-sidebar-options'
-        );
-
-        // Sidebar Field - Twitter
-        add_settings_field(
-            'sidebar-twitter',
-            'Twitter Handle',
-            function () {
-                require_once get_template_directory() . '/inc/templates/fields/twitter.php';
-            },
-            'alecaddd_sunset',
-            'sunset-sidebar-options'
-        );
-
-        // Sidebar Field - Facebook
-        add_settings_field(
-            'sidebar-facebook',
-            'Facebook Handle',
-            function () {
-                require_once get_template_directory() . '/inc/templates/fields/facebook.php';
-            },
-            'alecaddd_sunset',
-            'sunset-sidebar-options'
-        );
-
-        // Sidebar Field - Google Plus
-        add_settings_field(
-            'sidebar-gplus',
-            'Google+ Handle',
-            function () {
-                require_once get_template_directory() . '/inc/templates/fields/google.php';
-            },
-            'alecaddd_sunset',
-            'sunset-sidebar-options'
-        );
+        sunset_create_sidebar_option('name', 'Full Name');
+        sunset_create_sidebar_option('description', 'Description');
+        sunset_create_sidebar_option('twitter', 'Twitter Handle');
+        sunset_create_sidebar_option('facebook', 'Facebook Handle');
+        sunset_create_sidebar_option('gplus', 'Google+ Handle');
     });
+}
+
+/**
+ * Add settings field to the sidebar options
+ *
+ * @param $id
+ * @param $title
+ */
+function sunset_create_sidebar_option($id, $title)
+{
+    add_settings_field(
+        'sunset-' . $id,
+        $title,
+        function () use ($id) {
+            require_once get_template_directory() . '/inc/templates/fields/' . $id . '.php';
+        },
+        'alecaddd_sunset',
+        'sunset-sidebar-options'
+    );
 }
