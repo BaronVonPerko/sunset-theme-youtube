@@ -1,9 +1,9 @@
 <?php
 
-/*
- * Admin Page
- */
 
+/**
+ * Add the Admin page to the backend of the WordPress theme.
+ */
 function sunset_add_admin_page()
 {
     add_menu_page(
@@ -11,13 +11,10 @@ function sunset_add_admin_page()
         'Sunset',
         'manage_options',
         'alecaddd-sunset',
-        'sunset_theme_create_page',
+        function () {
+            require get_template_directory() . '/pages/admin.php';
+        },
         'dashicons-admin-customizer',
         '110');
 }
 add_action('admin_menu', 'sunset_add_admin_page');
-
-function sunset_theme_create_page() {
-    echo '<h1>Sunset Theme Options</h1>';
-
-}
