@@ -2,7 +2,7 @@
 
 
 /**
- * Add the Admin page and sub pages to the backend of the WordPress theme.
+ * Add the Admin page and sub pages to the backend of the Sunset WordPress theme.
  */
 function sunset_add_admin_page()
 {
@@ -13,7 +13,7 @@ function sunset_add_admin_page()
         'manage_options',
         'alecaddd_sunset',
         function () {
-            require_once get_template_directory() . '/inc/templates/admin.php';
+            require_once get_template_directory() . '/inc/templates/admin-general.php';
         },
         'dashicons-admin-customizer',
         110);
@@ -26,7 +26,7 @@ function sunset_add_admin_page()
         'manage_options',
         'alecaddd_sunset',
         function () {
-            require_once get_template_directory() . '/inc/templates/admin.php';
+            require_once get_template_directory() . '/inc/templates/admin-general.php';
         }
     );
 
@@ -41,6 +41,33 @@ function sunset_add_admin_page()
             require_once get_template_directory() . '/inc/templates/admin-css.php';
         }
     );
+
+    // Activate Custom Settings
+    add_action('admin_init', function () {
+        register_setting('sunset-settings-group', 'first_name');
+
+        // Sidebar Section
+        add_settings_section(
+            'sunset-sidebar-options',
+            'Sidebar Options',
+            function () {
+                echo 'Customize Your Sidebar Information';
+            },
+            'alecaddd_sunset'
+        );
+
+        // Sidebar Field - First Name
+        add_settings_field(
+            'sidebar-name',
+            'First Name',
+            function () {
+                $firstName = esc_attr(get_option('first_name'));
+                echo '<input name="first_name" value="'.$firstName.'" placeholder="First Name" />';
+            },
+            'alecaddd_sunset',
+            'sunset-sidebar-options'
+        );
+    });
 }
 
 add_action('admin_menu', 'sunset_add_admin_page');
