@@ -46,6 +46,7 @@ function sunset_add_admin_page()
     add_action('admin_init', function () {
         register_setting('sunset-settings-group', 'first_name');
         register_setting('sunset-settings-group', 'last_name');
+        register_setting('sunset-settings-group', 'user_description');
         register_setting('sunset-settings-group', 'twitter_handle', function ($input) {
             $output = sanitize_text_field($input);
             $output = str_replace('@', '', $output);
@@ -74,6 +75,17 @@ function sunset_add_admin_page()
             'Full Name',
             function () {
                 require_once get_template_directory() . '/inc/templates/fields/name.php';
+            },
+            'alecaddd_sunset',
+            'sunset-sidebar-options'
+        );
+
+        // Sidebar Field - Description
+        add_settings_field(
+            'sidebar-description',
+            'Description',
+            function () {
+                require_once get_template_directory() . '/inc/templates/fields/description.php';
             },
             'alecaddd_sunset',
             'sunset-sidebar-options'
