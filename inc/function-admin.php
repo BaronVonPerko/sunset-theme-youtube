@@ -2,9 +2,21 @@
 
 
 /**
- * Add the Admin page and sub pages to the backend of the Sunset WordPress theme.
+ * On admin_menu, setup admin pages and settings.
  */
-function sunset_add_admin_page()
+add_action('admin_menu', function () {
+
+    sunset_setup_admin_pages();
+
+    sunset_setup_admin_general_settings();
+
+});
+
+
+/**
+ * Setup admin menu page and sub pages.
+ */
+function sunset_setup_admin_pages()
 {
     // Generate Sunset Admin Page
     add_menu_page(
@@ -41,8 +53,14 @@ function sunset_add_admin_page()
             require_once get_template_directory() . '/inc/templates/admin-css.php';
         }
     );
+}
 
-    // Activate Custom Settings
+
+/**
+ * Setup admin general page settings.
+ */
+function sunset_setup_admin_general_settings()
+{
     add_action('admin_init', function () {
         register_setting('sunset-settings-group', 'first_name');
         register_setting('sunset-settings-group', 'last_name');
@@ -125,5 +143,3 @@ function sunset_add_admin_page()
         );
     });
 }
-
-add_action('admin_menu', 'sunset_add_admin_page');
