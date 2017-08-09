@@ -1,8 +1,5 @@
 <?php
 
-require_once get_template_directory() . '/inc/enums.php';
-
-
 /**
  * On admin_menu, setup admin pages and settings.
  */

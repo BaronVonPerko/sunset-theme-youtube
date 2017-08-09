@@ -1,30 +1,17 @@
 <?php
 
-require_once get_template_directory() . '/inc/enums.php';
-
+/**
+ * Sets up the post formats based on the formats
+ * selected in the Sunset Theme Options page.
+ */
 
 $options = get_option(OptionNames::POST_FORMATS);
-
-
-$formats = array(
-    'aside',
-    'gallery',
-    'link',
-    'image',
-    'quote',
-    'status',
-    'video',
-    'audio',
-    'chat'
-);
-
 $output = array();
 
-foreach ($formats as $format) {
+foreach (Misc::POST_FORMATS as $format) {
     $output[] = @$options[$format] == 1 ? $format : '';
 }
 
-
-if (!empty($options)) {
+if (!empty($output)) {
     add_theme_support('post-formats', $output);
 }

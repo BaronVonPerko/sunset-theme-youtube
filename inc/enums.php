@@ -45,3 +45,19 @@ abstract class PageSlugs
     const SUNSET_CSS = "alecaddd_sunset_css";
     const SUNSET_OPTIONS = "alecaddd_sunset_options";
 }
+
+
+abstract class Misc
+{
+    const POST_FORMATS = [
+        'aside',
+        'gallery',
+        'link',
+        'image',
+        'quote',
+        'status',
+        'video',
+        'audio',
+        'chat'
+    ];
+}

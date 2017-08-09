@@ -1,21 +1,8 @@
 <?php
 
-$formats = array(
-    'aside',
-    'gallery',
-    'link',
-    'image',
-    'quote',
-    'status',
-    'video',
-    'audio',
-    'chat'
-);
-
 $options = get_option(OptionNames::POST_FORMATS);
 
-
-foreach ($formats as $format): ?>
+foreach (Misc::POST_FORMATS as $format): ?>
     <label>
         <input type="checkbox"
                id="<?php echo $format; ?>"
