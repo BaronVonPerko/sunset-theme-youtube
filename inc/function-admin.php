@@ -113,13 +113,9 @@ function sunset_setup_admin_general_settings()
 function sunset_setup_options_settings()
 {
     add_action('admin_init', function () {
-        register_setting(
-            SettingsGroups::SUNSET_THEME_SUPPORT,
-            OptionNames::POST_FORMATS,
-            function ($input) {
-                return $input;
-            }
-        );
+        register_setting(SettingsGroups::SUNSET_THEME_SUPPORT, OptionNames::POST_FORMATS);
+        register_setting(SettingsGroups::SUNSET_THEME_SUPPORT, OptionNames::CUSTOM_HEADER);
+        register_setting(SettingsGroups::SUNSET_THEME_SUPPORT, OptionNames::CUSTOM_BACKGROUND);
     });
 
     // Theme Support Section
@@ -133,6 +129,8 @@ function sunset_setup_options_settings()
     );
 
     sunset_create_support_option('post-formats', 'Post Formats');
+    sunset_create_support_option('custom-header', 'Custom Header');
+    sunset_create_support_option('custom-background', 'Custom Background');
 }
 
 /**

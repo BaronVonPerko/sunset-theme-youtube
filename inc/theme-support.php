@@ -15,3 +15,18 @@ foreach (Misc::POST_FORMATS as $format) {
 if (!empty($output)) {
     add_theme_support('post-formats', $output);
 }
+
+
+/**
+ * Activate custom header.
+ */
+if (@get_option(OptionNames::CUSTOM_HEADER) == 1) {
+    add_theme_support('custom-header');
+}
+
+/**
+ * Activate custom background.
+ */
+if (@get_option(OptionNames::CUSTOM_BACKGROUND) == 1) {
+    add_theme_support('custom-background');
+}

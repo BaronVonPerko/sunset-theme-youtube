@@ -40,6 +40,6 @@ $pictureUrl = esc_attr(get_option(OptionNames::PROFILE_PICTURE));
     <?php
     settings_fields(SettingsGroups::SUNSET_SETTINGS);
     do_settings_sections(PageSlugs::SUNSET_SIDEBAR);
-    submit_button();
+    submit_button( 'Save Changes', 'primary', 'btn-submit' );
     ?>
 </form>

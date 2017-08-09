@@ -32,7 +32,9 @@ abstract class OptionNames
     const TWITTER_HANDLE = "twitter_handle";
     const FACEBOOK_HANDLE = "facebook_handle";
     const GPLUS_HANDLE = "gplus_handle";
-    CONST POST_FORMATS = "post_formats";
+    const POST_FORMATS = "post_formats";
+    const CUSTOM_HEADER = "custom_header";
+    const CUSTOM_BACKGROUND = "custom_background";
 }
 
 
