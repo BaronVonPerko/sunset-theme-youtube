@@ -1,5 +1,7 @@
 <?php
 
+require_once get_template_directory() . '/inc/enums.php';
+
 
 /**
  * On admin_menu, setup admin pages and settings.
@@ -23,7 +25,7 @@ function sunset_setup_admin_pages()
         'Sunset Theme Options',
         'Sunset',
         'manage_options',
-        'alecaddd_sunset',
+        PageSlugs::SUNSET,
         function () {
             require_once get_template_directory() . '/inc/templates/admin-general.php';
         },
@@ -32,11 +34,11 @@ function sunset_setup_admin_pages()
 
     // Generate General Sub Page
     add_submenu_page(
-        'alecaddd_sunset',
+        PageSlugs::SUNSET,
         'Sunset Theme Options',
         'General',
         'manage_options',
-        'alecaddd_sunset',
+        PageSlugs::SUNSET,
         function () {
             require_once get_template_directory() . '/inc/templates/admin-general.php';
         }
@@ -44,11 +46,11 @@ function sunset_setup_admin_pages()
 
     // Generate CSS Options Sub Page
     add_submenu_page(
-        'alecaddd_sunset',
+        PageSlugs::SUNSET,
         'Sunset CSS Options',
         'Custom CSS',
         'manage_options',
-        'alecaddd_sunset_css',
+        PageSlugs::SUNSET_CSS,
         function () {
             require_once get_template_directory() . '/inc/templates/admin-css.php';
         }
@@ -62,25 +64,25 @@ function sunset_setup_admin_pages()
 function sunset_setup_admin_general_settings()
 {
     add_action('admin_init', function () {
-        register_setting('sunset-settings-group', 'first_name');
-        register_setting('sunset-settings-group', 'last_name');
-        register_setting('sunset-settings-group', 'user_description');
-        register_setting('sunset-settings-group', 'twitter_handle', function ($input) {
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::FIRST_NAME);
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::LAST_NAME);
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::USER_DESCRIPTION);
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::TWITTER_HANDLE, function ($input) {
             return str_replace('@', '', sanitize_text_field($input));
         });
-        register_setting('sunset-settings-group', 'facebook_handle');
-        register_setting('sunset-settings-group', 'gplus_handle', function ($input) {
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::FACEBOOK_HANDLE);
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::GPLUS_HANDLE, function ($input) {
             return str_replace('+', '', sanitize_text_field($input));
         });
 
         // Sidebar Section
         add_settings_section(
-            'sunset-sidebar-options',
+            SettingsSection::SUNSET_SIDEBAR_OPTIONS,
             'Sidebar Options',
             function () {
                 echo '<p>Customize Your Sidebar Information</p>';
             },
-            'alecaddd_sunset'
+            PageSlugs::SUNSET
         );
 
         sunset_create_sidebar_option('name', 'Full Name');
@@ -105,7 +107,7 @@ function sunset_create_sidebar_option($id, $title)
         function () use ($id) {
             require_once get_template_directory() . '/inc/templates/fields/' . $id . '.php';
         },
-        'alecaddd_sunset',
-        'sunset-sidebar-options'
+        PageSlugs::SUNSET,
+        SettingsSection::SUNSET_SIDEBAR_OPTIONS
     );
 }

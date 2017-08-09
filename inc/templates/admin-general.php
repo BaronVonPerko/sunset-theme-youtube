@@ -1,9 +1,13 @@
 <?php
+
+require_once get_template_directory() . '/inc/enums.php';
+
 /**
  * Page variables
  */
-$fullName = esc_attr(get_option('first_name')) . ' ' . esc_attr(get_option('last_name'));
-$description = esc_attr(get_option('user_description'));
+
+$fullName = esc_attr(get_option(OptionNames::FIRST_NAME)) . ' ' . esc_attr(get_option(OptionNames::LAST_NAME));
+$description = esc_attr(get_option(OptionNames::USER_DESCRIPTION));
 ?>
 
 <h1>Sunset Theme Options</h1>
@@ -15,9 +19,11 @@ $description = esc_attr(get_option('user_description'));
         <h1 class="sunset-username">
             <?php print $fullName; ?>
         </h1>
+
         <h2 class="sunset-description">
             <?php print $description; ?>
         </h2>
+
         <div class="icons-wrapper">
 
         </div>
@@ -26,8 +32,8 @@ $description = esc_attr(get_option('user_description'));
 
 <form action="options.php" method="post" class="sunset-general-form">
     <?php
-    settings_fields('sunset-settings-group');
-    do_settings_sections('alecaddd_sunset');
+    settings_fields(SettingsGroups::SUNSET_SETTINGS);
+    do_settings_sections(PageSlugs::SUNSET);
     submit_button();
     ?>
 </form>
