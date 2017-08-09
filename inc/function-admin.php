@@ -12,6 +12,8 @@ add_action('admin_menu', function () {
 
     sunset_setup_admin_general_settings();
 
+    sunset_setup_options_settings();
+
 });
 
 
@@ -25,28 +27,40 @@ function sunset_setup_admin_pages()
         'Sunset Theme Options',
         'Sunset',
         'manage_options',
-        PageSlugs::SUNSET,
+        PageSlugs::SUNSET_SIDEBAR,
         function () {
-            require_once get_template_directory() . '/inc/templates/admin-general.php';
+            require_once get_template_directory() . '/inc/templates/admin-sidebar.php';
         },
         'dashicons-admin-customizer',
         110);
 
-    // Generate General Sub Page
+    // Generate Sunset Sidebar Sub Page
     add_submenu_page(
-        PageSlugs::SUNSET,
-        'Sunset Theme Options',
-        'General',
+        PageSlugs::SUNSET_SIDEBAR,
+        'Sunset Sidebar Options',
+        'Sidebar',
         'manage_options',
-        PageSlugs::SUNSET,
+        PageSlugs::SUNSET_SIDEBAR,
         function () {
-            require_once get_template_directory() . '/inc/templates/admin-general.php';
+            require_once get_template_directory() . '/inc/templates/admin-sidebar.php';
+        }
+    );
+
+    // Generate Theme Options Sub Page
+    add_submenu_page(
+        PageSlugs::SUNSET_SIDEBAR,
+        'Sunset Theme Options',
+        'Theme Options',
+        'manage_options',
+        PageSlugs::SUNSET_OPTIONS,
+        function () {
+            require_once get_template_directory() . '/inc/templates/admin-options.php';
         }
     );
 
     // Generate CSS Options Sub Page
     add_submenu_page(
-        PageSlugs::SUNSET,
+        PageSlugs::SUNSET_SIDEBAR,
         'Sunset CSS Options',
         'Custom CSS',
         'manage_options',
@@ -83,7 +97,7 @@ function sunset_setup_admin_general_settings()
             function () {
                 echo '<p>Customize Your Sidebar Information</p>';
             },
-            PageSlugs::SUNSET
+            PageSlugs::SUNSET_SIDEBAR
         );
 
         sunset_create_sidebar_option('profile-picture', 'Profile Picture');
@@ -95,6 +109,35 @@ function sunset_setup_admin_general_settings()
     });
 }
 
+
+/**
+ * Setup admin options page settings.
+ */
+function sunset_setup_options_settings()
+{
+    add_action('admin_init', function () {
+        register_setting(
+            SettingsGroups::SUNSET_THEME_SUPPORT,
+            OptionNames::POST_FORMATS,
+            function ($input) {
+                return $input;
+            }
+        );
+    });
+
+    // Theme Support Section
+    add_settings_section(
+        SettingsSection::SUNSET_THEME_OPTIONS,
+        'Theme Options',
+        function () {
+            echo 'Activate and Deactivate specific Theme Support Options';
+        },
+        PageSlugs::SUNSET_OPTIONS
+    );
+
+    sunset_create_support_option('post-formats', 'Post Formats');
+}
+
 /**
  * Add settings field to the sidebar options
  *
@@ -103,13 +146,39 @@ function sunset_setup_admin_general_settings()
  */
 function sunset_create_sidebar_option($id, $title)
 {
+    create_option($id, $title, PageSlugs::SUNSET_SIDEBAR, SettingsSection::SUNSET_SIDEBAR_OPTIONS);
+}
+
+
+/**
+ * Add settings field to the theme support options
+ *
+ * @param $id
+ * @param $title
+ */
+function sunset_create_support_option($id, $title)
+{
+    create_option($id, $title, PageSlugs::SUNSET_OPTIONS, SettingsSection::SUNSET_THEME_OPTIONS);
+}
+
+
+/**
+ * Create the option.
+ *
+ * @param $id
+ * @param $title
+ * @param $slug
+ * @param $section
+ */
+function create_option($id, $title, $slug, $section)
+{
     add_settings_field(
         'sunset-' . $id,
         $title,
         function () use ($id) {
             require_once get_template_directory() . '/inc/templates/fields/' . $id . '.php';
         },
-        PageSlugs::SUNSET,
-        SettingsSection::SUNSET_SIDEBAR_OPTIONS
+        $slug,
+        $section
     );
 }

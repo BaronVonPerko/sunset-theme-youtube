@@ -6,6 +6,7 @@
 abstract class SettingsGroups
 {
     const SUNSET_SETTINGS = "sunset-settings-group";
+    const SUNSET_THEME_SUPPORT = "sunset-theme-support";
 }
 
 
@@ -15,6 +16,7 @@ abstract class SettingsGroups
 abstract class SettingsSection
 {
     const SUNSET_SIDEBAR_OPTIONS = "sunset-sidebar-options";
+    const SUNSET_THEME_OPTIONS = "sunset-theme-options";
 }
 
 
@@ -30,6 +32,7 @@ abstract class OptionNames
     const TWITTER_HANDLE = "twitter_handle";
     const FACEBOOK_HANDLE = "facebook_handle";
     const GPLUS_HANDLE = "gplus_handle";
+    CONST POST_FORMATS = "post_formats";
 }
 
 
@@ -38,6 +41,7 @@ abstract class OptionNames
  */
 abstract class PageSlugs
 {
-    const SUNSET = "alecaddd_sunset";
+    const SUNSET_SIDEBAR = "alecaddd_sunset_sidebar";
     const SUNSET_CSS = "alecaddd_sunset_css";
+    const SUNSET_OPTIONS = "alecaddd_sunset_options";
 }

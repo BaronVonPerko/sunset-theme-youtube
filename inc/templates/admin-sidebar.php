@@ -11,7 +11,7 @@ $description = esc_attr(get_option(OptionNames::USER_DESCRIPTION));
 $pictureUrl = esc_attr(get_option(OptionNames::PROFILE_PICTURE));
 ?>
 
-<h1>Sunset Theme Options</h1>
+<h1>Sunset Sidebar Options</h1>
 
 <?php settings_errors(); ?>
 
@@ -41,7 +41,7 @@ $pictureUrl = esc_attr(get_option(OptionNames::PROFILE_PICTURE));
 <form action="options.php" method="post" class="sunset-general-form">
     <?php
     settings_fields(SettingsGroups::SUNSET_SETTINGS);
-    do_settings_sections(PageSlugs::SUNSET);
+    do_settings_sections(PageSlugs::SUNSET_SIDEBAR);
     submit_button();
     ?>
 </form>
