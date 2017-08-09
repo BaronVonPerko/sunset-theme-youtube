@@ -8,6 +8,7 @@ require_once get_template_directory() . '/inc/enums.php';
 
 $fullName = esc_attr(get_option(OptionNames::FIRST_NAME)) . ' ' . esc_attr(get_option(OptionNames::LAST_NAME));
 $description = esc_attr(get_option(OptionNames::USER_DESCRIPTION));
+$pictureUrl = esc_attr(get_option(OptionNames::PROFILE_PICTURE));
 ?>
 
 <h1>Sunset Theme Options</h1>
@@ -16,6 +17,13 @@ $description = esc_attr(get_option(OptionNames::USER_DESCRIPTION));
 
 <div class="sunset-sidebar-preview">
     <div class="sunset-sidebar">
+
+        <div class="image-container">
+            <div id="profile-picture-preview"
+                 class="profile-picture"
+                 style="background-image: url(<?php print $pictureUrl; ?>);"></div>
+        </div>
+
         <h1 class="sunset-username">
             <?php print $fullName; ?>
         </h1>

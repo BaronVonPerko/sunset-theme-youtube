@@ -64,6 +64,7 @@ function sunset_setup_admin_pages()
 function sunset_setup_admin_general_settings()
 {
     add_action('admin_init', function () {
+        register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::PROFILE_PICTURE);
         register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::FIRST_NAME);
         register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::LAST_NAME);
         register_setting(SettingsGroups::SUNSET_SETTINGS, OptionNames::USER_DESCRIPTION);
@@ -85,6 +86,7 @@ function sunset_setup_admin_general_settings()
             PageSlugs::SUNSET
         );
 
+        sunset_create_sidebar_option('profile-picture', 'Profile Picture');
         sunset_create_sidebar_option('name', 'Full Name');
         sunset_create_sidebar_option('description', 'Description');
         sunset_create_sidebar_option('twitter', 'Twitter Handle');

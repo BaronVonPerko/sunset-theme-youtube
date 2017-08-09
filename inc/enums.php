@@ -23,6 +23,7 @@ abstract class SettingsSection
  */
 abstract class OptionNames
 {
+    const PROFILE_PICTURE = "profile_picture";
     const FIRST_NAME = "first_name";
     const LAST_NAME = "last_name";
     const USER_DESCRIPTION = "user_description";
