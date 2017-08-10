@@ -16,7 +16,10 @@ if (@get_option(OptionNames::ACTIVATE_CONTACT_FORM) == 1) {
     sunset_contact_columns();
 
     sunset_contact_custom_columns();
-    
+
+    sunset_contact_add_email_meta_box();
+
+    add_action('save_post', 'sunset_save_contact_email_data');
 }
 
 
@@ -65,6 +68,7 @@ function sunset_contact_columns()
     );
 }
 
+
 /**
  * Set how certain columns will be displayed.
  */
@@ -79,11 +83,75 @@ function sunset_contact_custom_columns()
                     break;
 
                 case 'email':
-                    echo 'email address';
+                    $email = get_post_meta($postId, MetaBoxes::SUNSET_CONTACT_EMAIL_VALUE_KEY, true);
+                    echo '<a href="mailto:' . $email . '">' . $email . '</a>';
                     break;
             }
         },
         10, // priority
         2   // number of arguments
     );
+}
+
+
+/**
+ * Setup the meta box for capturing email addresses.
+ */
+function sunset_contact_add_email_meta_box()
+{
+    add_action('add_meta_boxes', function () {
+        add_meta_box(
+            MetaBoxes::SUNSET_CONTACT_EMAIL,
+            'User Email',
+            function ($post) {
+                wp_nonce_field(
+                    'sunset_save_contact_email_data',
+                    MetaBoxes::SUNSET_CONTACT_EMAIL_META_BOX_NONCE
+                );
+
+                $value = get_post_meta($post->ID, MetaBoxes::SUNSET_CONTACT_EMAIL_VALUE_KEY, true);
+
+                require_once(get_template_directory() . '/inc/templates/metaboxes/email.php');
+            },
+            CustomPostTypes::SUNSET_CONTACT,
+            'side'
+        );
+    });
+}
+
+
+/**
+ * Save the email meta box data.
+ *
+ * @param $postId
+ */
+function sunset_save_contact_email_data($postId)
+{
+    if (!isset($_POST[MetaBoxes::SUNSET_CONTACT_EMAIL_META_BOX_NONCE])) {
+        return;
+    }
+
+    // prevent hackers!
+    if (!wp_verify_nonce($_POST[MetaBoxes::SUNSET_CONTACT_EMAIL_META_BOX_NONCE], 'sunset_save_contact_email_data')) {
+        return;
+    }
+
+    // prevent saving if WP is auto saving the form
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // check user permissions
+    if (!current_user_can('edit_post', $postId)) {
+        return;
+    }
+
+    // return if our email field is empty
+    if (!isset($_POST[MetaBoxes::SUNSET_CONTACT_EMAIL_FIELD])) {
+        return;
+    }
+
+    $email = sanitize_text_field($_POST[MetaBoxes::SUNSET_CONTACT_EMAIL_FIELD]);
+
+    update_post_meta($postId, MetaBoxes::SUNSET_CONTACT_EMAIL_VALUE_KEY, $email);
 }

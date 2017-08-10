@@ -63,6 +63,18 @@ abstract class CustomPostTypes
 
 
 /**
+ * Class MetaBoxes
+ */
+abstract class MetaBoxes
+{
+    const SUNSET_CONTACT_EMAIL = "sunset_contact_email";
+    const SUNSET_CONTACT_EMAIL_META_BOX_NONCE = "sunset_contact_email_meta_box_nonce";
+    const SUNSET_CONTACT_EMAIL_FIELD = "sunset_contact_email_field";
+    const SUNSET_CONTACT_EMAIL_VALUE_KEY = "_contact_email_value_key";
+}
+
+
+/**
  * Class Misc
  */
 abstract class Misc
