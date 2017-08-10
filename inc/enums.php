@@ -7,6 +7,7 @@ abstract class SettingsGroups
 {
     const SUNSET_SETTINGS = "sunset-settings-group";
     const SUNSET_THEME_SUPPORT = "sunset-theme-support";
+    const SUNSET_CONTACT_OPTIONS = "sunset-contact-options";
 }
 
 
@@ -17,6 +18,7 @@ abstract class SettingsSection
 {
     const SUNSET_SIDEBAR_OPTIONS = "sunset-sidebar-options";
     const SUNSET_THEME_OPTIONS = "sunset-theme-options";
+    const SUNSET_CONTACT_OPTIONS = "sunset-contact-options";
 }
 
 
@@ -35,6 +37,7 @@ abstract class OptionNames
     const POST_FORMATS = "post_formats";
     const CUSTOM_HEADER = "custom_header";
     const CUSTOM_BACKGROUND = "custom_background";
+    const ACTIVATE_CONTACT_FORM = "activate_contact_form";
 }
 
 
@@ -46,6 +49,13 @@ abstract class PageSlugs
     const SUNSET_SIDEBAR = "alecaddd_sunset_sidebar";
     const SUNSET_CSS = "alecaddd_sunset_css";
     const SUNSET_OPTIONS = "alecaddd_sunset_options";
+    const SUNSET_CONTACT = "alecaddd_sunset_theme_contact";
+}
+
+
+abstract class CustomPostTypes
+{
+    const SUNSET_CONTACT = "sunset-contact";
 }
 
 

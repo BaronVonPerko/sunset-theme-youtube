@@ -11,6 +11,7 @@ add_action('admin_menu', function () {
 
     sunset_setup_options_settings();
 
+    sunset_setup_contact_form_options();
 });
 
 
@@ -52,6 +53,18 @@ function sunset_setup_admin_pages()
         PageSlugs::SUNSET_OPTIONS,
         function () {
             require_once get_template_directory() . '/inc/templates/admin-options.php';
+        }
+    );
+
+    // Generate Contact Form Options Sub Page
+    add_submenu_page(
+        PageSlugs::SUNSET_SIDEBAR,
+        'Sunset Contact Form',
+        'Contact Form',
+        'manage_options',
+        PageSlugs::SUNSET_CONTACT,
+        function () {
+            require_once get_template_directory() . '/inc/templates/admin-contact.php';
         }
     );
 
@@ -133,6 +146,29 @@ function sunset_setup_options_settings()
     sunset_create_support_option('custom-background', 'Custom Background');
 }
 
+
+/**
+ * Setup the settings and options for the contact form.
+ */
+function sunset_setup_contact_form_options()
+{
+    add_action('admin_init', function () {
+        register_setting(SettingsGroups::SUNSET_CONTACT_OPTIONS, OptionNames::ACTIVATE_CONTACT_FORM);
+    });
+
+    add_settings_section(
+        SettingsSection::SUNSET_CONTACT_OPTIONS,
+        'Contact Form Options',
+        function () {
+            echo 'Activate and Deactivate Contact Form Options';
+        },
+        PageSlugs::SUNSET_CONTACT
+    );
+
+    sunset_create_contact_form_option('activate-contact-form', 'Activate Contact Form');
+}
+
+
 /**
  * Add settings field to the sidebar options
  *
@@ -154,6 +190,18 @@ function sunset_create_sidebar_option($id, $title)
 function sunset_create_support_option($id, $title)
 {
     create_option($id, $title, PageSlugs::SUNSET_OPTIONS, SettingsSection::SUNSET_THEME_OPTIONS);
+}
+
+
+/**
+ * Add settings field to the contact form options
+ *
+ * @param $id
+ * @param $title
+ */
+function sunset_create_contact_form_option($id, $title)
+{
+    create_option($id, $title, PageSlugs::SUNSET_CONTACT, SettingsSection::SUNSET_CONTACT_OPTIONS);
 }
 
 
