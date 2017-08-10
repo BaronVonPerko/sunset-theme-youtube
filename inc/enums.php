@@ -53,12 +53,18 @@ abstract class PageSlugs
 }
 
 
+/**
+ * Class CustomPostTypes
+ */
 abstract class CustomPostTypes
 {
     const SUNSET_CONTACT = "sunset-contact";
 }
 
 
+/**
+ * Class Misc
+ */
 abstract class Misc
 {
     const POST_FORMATS = [

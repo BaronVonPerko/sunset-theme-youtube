@@ -6,11 +6,19 @@
 
 
 /**
- * Activate custom contact form.
+ * Activate custom contact form, and modify how
+ * it is displayed on the admin page.
  */
 if (@get_option(OptionNames::ACTIVATE_CONTACT_FORM) == 1) {
+
     sunset_contact_custom_post_type();
+
+    sunset_contact_columns();
+
+    sunset_contact_custom_columns();
+    
 }
+
 
 /**
  * Contact Custom Post Type
@@ -36,4 +44,46 @@ function sunset_contact_custom_post_type()
     );
 
     register_post_type(CustomPostTypes::SUNSET_CONTACT, $args);
+}
+
+
+/**
+ * Set columns to be displayed in admin page.
+ */
+function sunset_contact_columns()
+{
+    add_filter(
+        'manage_' . CustomPostTypes::SUNSET_CONTACT . '_posts_columns',
+        function () {
+            return array(
+                'title'   => 'Full Name',
+                'message' => 'Message',
+                'email'   => 'Email',
+                'date'    => 'Date'
+            );
+        }
+    );
+}
+
+/**
+ * Set how certain columns will be displayed.
+ */
+function sunset_contact_custom_columns()
+{
+    add_action(
+        'manage_' . CustomPostTypes::SUNSET_CONTACT . '_posts_custom_column',
+        function ($column, $postId) {
+            switch ($column) {
+                case 'message':
+                    echo get_the_excerpt();
+                    break;
+
+                case 'email':
+                    echo 'email address';
+                    break;
+            }
+        },
+        10, // priority
+        2   // number of arguments
+    );
 }
